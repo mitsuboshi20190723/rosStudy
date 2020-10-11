@@ -29,7 +29,7 @@
 #define JOY_DEV "/dev/input/js0"
 #define SERVO_DEV "/dev/ttyUSB0"
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	int joy_fd(-1), num_of_axis(0), num_of_buttons(0);
 	auto servo_id(0), servo_d(0), servo_a(0);

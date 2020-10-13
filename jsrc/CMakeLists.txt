@@ -41,12 +41,14 @@ target_link_libraries(pantilt ics3)
 rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
 
 install(TARGETS
-  kiku ptrl  pantilt
-  #  EXPORT export_minimal_comp_node
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+	kiku ptrl pantilt
+	#  EXPORT export_minimal_comp_node
+	ARCHIVE DESTINATION lib
+	LIBRARY DESTINATION lib
+	RUNTIME DESTINATION bin
 )
+
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

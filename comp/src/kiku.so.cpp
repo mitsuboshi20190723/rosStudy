@@ -20,7 +20,7 @@ class KIKU : public rclcpp::Node
 public:
 	__attribute__ ((visibility("default")))
 //	COMPOSITION_PUBLIC
-	explicit KIKU(const rclcpp::NodeOptions & opt) : Node("kiku.so", opt)
+	explicit KIKU(const rclcpp::NodeOptions & opt) : Node("kiku_so", opt)
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
@@ -28,7 +28,7 @@ public:
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter.so", qos, callback);
+		sub_ = create_subscription<std_msgs::msg::String>("chatter_so", qos, callback);
 	}
 
 private:

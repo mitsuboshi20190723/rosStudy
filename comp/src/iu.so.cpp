@@ -21,7 +21,7 @@ class IU : public rclcpp::Node
 public:
 	__attribute__ ((visibility("default")))
 //	COMPOSITION_PUBLIC
-	explicit IU(const rclcpp::NodeOptions & opt) : Node("iu.so", opt)
+	explicit IU(const rclcpp::NodeOptions & opt) : Node("iu_so", opt)
 	{
 		auto publish_message = [this]() -> void
 		{
@@ -33,7 +33,7 @@ public:
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		pub_ = create_publisher<std_msgs::msg::String>("chatter.so", qos);
+		pub_ = create_publisher<std_msgs::msg::String>("chatter_so", qos);
 		timer_ = create_wall_timer(std::chrono::milliseconds(500), publish_message);
 	}
 

@@ -16,7 +16,7 @@
 class Talker : public rclcpp::Node
 {
 public:
-	explicit Talker(const std::string & topic_name) : Node("iu.sa")
+	explicit Talker(const std::string & topic_name) : Node("iu_sa")
 	{
 		auto publish_message = [this]() -> void
 		{
@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
 	setvbuf(stdout, NULL, _IONBF, BUFSIZ);
 	rclcpp::init(argc, argv);
 
-	auto node = std::make_shared<Talker>("chatter.sa");
+	auto node = std::make_shared<Talker>("chatter_sa");
 	rclcpp::spin(node);
 	rclcpp::shutdown();
 

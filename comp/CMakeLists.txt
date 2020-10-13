@@ -28,12 +28,12 @@ ament_target_dependencies(kiku.sa rclcpp std_msgs)
 add_library(iu.so SHARED src/iu.so.cpp)
 target_compile_definitions(iu.so PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(iu.so rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(iu.so "jsrc::IU.so")
+rclcpp_components_register_nodes(iu.so "comp::IU")
 
 add_library(kiku.so SHARED src/kiku.so.cpp)
 target_compile_definitions(kiku.so PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(kiku.so rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(kiku.so "jsrc::KIKU.so")
+rclcpp_components_register_nodes(kiku.so "comp::KIKU")
 
 
 install(TARGETS iu.sa kiku.sa DESTINATION lib/${PROJECT_NAME})

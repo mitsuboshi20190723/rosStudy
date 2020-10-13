@@ -15,7 +15,7 @@
 class Listener : public rclcpp::Node
 {
 public:
-	explicit Listener(const std::string & topic_name) : Node("kiku.sa")
+	explicit Listener(const std::string & topic_name) : Node("kiku_sa")
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
@@ -35,7 +35,7 @@ int main(int argc, char * argv[])
 	setvbuf(stdout, NULL, _IONBF, BUFSIZ);
 	rclcpp::init(argc, argv);
 
-	auto node = std::make_shared<Listener>("chatter.sa");
+	auto node = std::make_shared<Listener>("chatter_sa");
 	rclcpp::spin(node);
 	rclcpp::shutdown();
 	return 0;

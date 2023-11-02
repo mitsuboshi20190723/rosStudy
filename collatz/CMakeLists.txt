@@ -9,12 +9,19 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
-# find_package(<dependency> REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rclcpp_components REQUIRED)
+
+include_directories(include)
+
+add_executable(test_iu src/test_iu.cpp)
+ament_target_dependencies(test_iu rclcpp std_msgs)
+
+add_executable(test_kiku src/test_kiku.cpp)
+ament_target_dependencies(test_kiku rclcpp std_msgs)
+
 
 add_library(iu SHARED src/iu.cpp)
 target_compile_definitions(iu PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -26,6 +33,7 @@ target_compile_definitions(kiku PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(kiku rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(kiku "collatz::KIKU")
 
+install(TARGETS test_iu test_kiku DESTINATION lib/${PROJECT_NAME})
 install(TARGETS
 	iu kiku
 	#  EXPORT export_minimal_comp_node

@@ -39,11 +39,13 @@ rclcpp_components_register_nodes(kiku.so "comp::KIKU")
 install(TARGETS iu.sa kiku.sa DESTINATION lib/${PROJECT_NAME})
 install(TARGETS
 	iu.so kiku.so
-##	EXPORT export_minimal_comp_node
+	EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib
 	RUNTIME DESTINATION bin
 )
+
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

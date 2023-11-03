@@ -1,17 +1,17 @@
 /*
- * 2020.10.8
+ * 2023.11.3
  * iu.so.cpp
- * ver 1.0
+ * ver.1.0
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
 #include <chrono>
-//#include <cstdio>
-//#include <memory>
 #include <string>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
+
+#define SO_TOPIC_NAME "chatter_so"
 
 namespace comp
 {
@@ -26,14 +26,14 @@ public:
 		auto publish_message = [this]() -> void
 		{
 			auto msg = std::make_unique<std_msgs::msg::String>();
-			msg->data = "SO sya Hello world!";
+			msg->data = "Hello world!";
 
-			RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+			RCLCPP_INFO(this->get_logger(), "SO say %s", msg->data.c_str());
 			pub_->publish(std::move(msg));
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		pub_ = create_publisher<std_msgs::msg::String>("chatter_so", qos);
+		pub_ = create_publisher<std_msgs::msg::String>(SO_TOPIC_NAME, qos);
 		timer_ = create_wall_timer(std::chrono::milliseconds(500), publish_message);
 	}
 

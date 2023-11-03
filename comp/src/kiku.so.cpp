@@ -1,16 +1,16 @@
 /*
- * 2020.10.8
+ * 2023.11.3
  * kiku.so.cpp
- * ver 1.0
+ * ver.1.0
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-//#include <cstdio>
-//#include <memory>
 #include <string>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
+
+#define SO_TOPIC_NAME "chatter_so"
 
 namespace comp
 {
@@ -24,11 +24,11 @@ public:
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
-			RCLCPP_INFO(this->get_logger(), "KIKUSO : %s", msg->data.c_str());
+			RCLCPP_INFO(this->get_logger(), "SO hear %s", msg->data.c_str());
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter_so", qos, callback);
+		sub_ = create_subscription<std_msgs::msg::String>(SO_TOPIC_NAME, qos, callback);
 	}
 
 private:

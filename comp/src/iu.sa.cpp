@@ -1,7 +1,7 @@
 /*
- * 2020.10.8
+ * 2023.11.3
  * iu.sa.cpp
- * ver 1.0
+ * ver.1.0
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -13,6 +13,8 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+#define SA_TOPIC_NAME "chtter_sa"
+
 class Talker : public rclcpp::Node
 {
 public:
@@ -21,9 +23,9 @@ public:
 		auto publish_message = [this]() -> void
 		{
 			auto msg = std::make_unique<std_msgs::msg::String>();
-			msg->data = "SA say Hello world!";
+			msg->data = "Hello world!";
 
-			RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+			RCLCPP_INFO(this->get_logger(), "SA say %s", msg->data.c_str());
 			pub_->publish(std::move(msg));
 		};
 
@@ -37,12 +39,12 @@ private:
 	rclcpp::TimerBase::SharedPtr timer_;
 };
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
 	setvbuf(stdout, NULL, _IONBF, BUFSIZ);
 	rclcpp::init(argc, argv);
 
-	auto node = std::make_shared<Talker>("chatter_sa");
+	auto node = std::make_shared<Talker>(SA_TOPIC_NAME);
 	rclcpp::spin(node);
 	rclcpp::shutdown();
 

@@ -1,7 +1,7 @@
 /*
- * 2020.10.8
+ * 2023.11.3
  * kiku.sa.cpp
- * ver 1.0
+ * ver.1.0
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -12,6 +12,8 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+#define SA_TOPIC_NAME "chtter_sa"
+
 class Listener : public rclcpp::Node
 {
 public:
@@ -19,7 +21,7 @@ public:
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
-			RCLCPP_INFO(this->get_logger(), "KIKUSA : %s", msg->data.c_str());
+			RCLCPP_INFO(this->get_logger(), "SA hear %s", msg->data.c_str());
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
@@ -30,12 +32,12 @@ private:
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
 };
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
 	setvbuf(stdout, NULL, _IONBF, BUFSIZ);
 	rclcpp::init(argc, argv);
 
-	auto node = std::make_shared<Listener>("chatter_sa");
+	auto node = std::make_shared<Listener>(SA_TOPIC_NAME);
 	rclcpp::spin(node);
 	rclcpp::shutdown();
 	return 0;

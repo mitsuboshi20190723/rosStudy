@@ -14,6 +14,7 @@
 # ros2 component load /ComponentManager comp comp::KIKU -e use_intra_process_comms:=true
 # ros2 component load /ComponentManager comp comp::IU -e use_intra_process_comms:=true
 
+
 from launch import LaunchDescription
 from launch_ros.actions import LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
@@ -26,17 +27,13 @@ def generate_launch_description():
 				package="comp",
 				plugin="comp::KIKU",
 				name="kiku.so",
-				extra_arguments=[
-					{"use_intra_process_comms": True}
-				]
+				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
 				package="comp",
 				plugin="comp::IU",
 				name="iu.so",
-				extra_arguments=[
-					{"use_intra_process_comms": True}
-				]
+				extra_arguments=[{"use_intra_process_comms": True}]
 			)
 		]
 	)

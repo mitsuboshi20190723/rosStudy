@@ -1,7 +1,7 @@
 /*
- * 2023.11.3
+ * 2023.11.4
  * kiku.so.cpp
- * ver.1.0
+ * ver.1.2
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -19,7 +19,6 @@ class KIKU : public rclcpp::Node
 {
 public:
 	__attribute__ ((visibility("default")))
-//	COMPOSITION_PUBLIC
 	explicit KIKU(const rclcpp::NodeOptions & opt) : Node("kiku_so", opt)
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void

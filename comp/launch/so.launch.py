@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.3
+ #  2023.11.4
  #  so.launch.py
- #  ver.1.0
+ #  ver.1.2
  #  Kunihito Mitsuboshi
  #  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  ##
@@ -16,26 +16,31 @@
 
 
 from launch import LaunchDescription
-from launch_ros.actions import LoadComposableNodes
+from launch_ros.actions import ComposableNodeContainer, LoadComposableNodes
 from launch_ros.descriptions import ComposableNode
 
+
 def generate_launch_description():
+	container = ComposableNodeContainer(
+		name="comp_container",
+		namespace="",
+		package="rclcpp_components",
+		executable="component_container"
+	)
 	components = LoadComposableNodes(
-		target_container="comp_container",
+		target_container=container,
 		composable_node_descriptions=[
 			ComposableNode(
 				package="comp",
 				plugin="comp::KIKU",
-				name="kiku.so",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
 				package="comp",
 				plugin="comp::IU",
-				name="iu.so",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			)
 		]
 	)
 
-	return LaunchDescription([components])
+	return LaunchDescription([container, components])

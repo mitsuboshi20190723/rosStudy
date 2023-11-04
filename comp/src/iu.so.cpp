@@ -1,7 +1,7 @@
 /*
- * 2023.11.3
+ * 2023.11.4
  * iu.so.cpp
- * ver.1.0
+ * ver.1.2
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -20,7 +20,6 @@ class IU : public rclcpp::Node
 {
 public:
 	__attribute__ ((visibility("default")))
-//	COMPOSITION_PUBLIC
 	explicit IU(const rclcpp::NodeOptions & opt) : Node("iu_so", opt)
 	{
 		auto publish_message = [this]() -> void

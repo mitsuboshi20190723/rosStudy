@@ -29,7 +29,7 @@ ament_target_dependencies(map rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(map "collatz::MAP")
 install(TARGETS map DESTINATION lib)
 
-add_library(calculate SHARED src/calculat.cpp)
+add_library(calculate SHARED src/calculate.cpp)
 ament_target_dependencies(calculate rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(calculate "collatz::Calculate")
 # install(TARGETS calculate DESTINATION lib)

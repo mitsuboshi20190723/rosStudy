@@ -11,7 +11,7 @@
 
 
 # ros2 run comp kiku.sa
-# ros2 run comp iu.sa 
+# ros2 run comp iu.sa
 
 
 from launch import LaunchDescription

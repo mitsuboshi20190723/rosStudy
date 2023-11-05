@@ -26,7 +26,7 @@ install(TARGETS test_kiku DESTINATION lib/${PROJECT_NAME})
 
 add_library(map SHARED src/map.cpp)
 ament_target_dependencies(map rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(map "collatz::MAP")
+rclcpp_components_register_nodes(map "collatz::Map")
 install(TARGETS map DESTINATION lib)
 
 add_library(calculate SHARED src/calculate.cpp)

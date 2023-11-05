@@ -1,5 +1,5 @@
 /*
- * 2023.11.3
+ * 2023.11.5
  * collatz.hpp
  * ver.1.0
  * Kunihito Mitsuboshi
@@ -29,7 +29,7 @@ public:
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
 		pub_ = create_publisher<std_msgs::msg::String>(topic_name, qos);
-		timer_ = create_wall_timer(std::chrono::milliseconds(500), publish_message);
+		timer_ = create_wall_timer(std::chrono::milliseconds(1000), publish_message);
 	}
 
 private:

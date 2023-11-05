@@ -1,7 +1,7 @@
 /*
- * 2023.11.4
+ * 2023.11.5
  * map.cpp
- * ver.0.1
+ * ver.0.2
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -15,16 +15,16 @@
 namespace collatz
 {
 
-class MAP : public rclcpp::Node
+class Map : public rclcpp::Node
 {
 public:
-	explicit MAP(const rclcpp::NodeOptions &opt) : Node("map", opt), count_(0)
+	explicit Map(const rclcpp::NodeOptions &opt) : Node("MAP", opt), count_(0)
 	{
 		auto publish_message = [this]() -> void
 		{
 			count_++;
 			auto msg = std::make_unique<std_msgs::msg::String>();
-			msg->data = "Rady " + std::to_string(count_);
+			msg->data = /*"Rady " + */ std::to_string(count_);
 
 			RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
 			pub_->publish(std::move(msg));
@@ -45,4 +45,4 @@ private:
 
 
 #include "rclcpp_components/register_node_macro.hpp"
-RCLCPP_COMPONENTS_REGISTER_NODE(collatz::MAP)
+RCLCPP_COMPONENTS_REGISTER_NODE(collatz::Map)

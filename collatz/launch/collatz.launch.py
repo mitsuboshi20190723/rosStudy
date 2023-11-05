@@ -2,17 +2,12 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.4
+ #  2023.11.5
  #  collatz.launch.py
  #  ver.1.0
  #  Kunihito Mitsuboshi
  #  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  ##
-
-
-# ros2 run rclcpp_components component_container
-# ros2 component load /ComponentManager comp comp::KIKU -e use_intra_process_comms:=true
-# ros2 component load /ComponentManager comp comp::IU -e use_intra_process_comms:=true
 
 
 from launch import LaunchDescription
@@ -32,12 +27,12 @@ def generate_launch_description():
 		composable_node_descriptions=[
 			ComposableNode(
 				package="collatz",
-				plugin="collatz::KIKU",
+				plugin="collatz::Calculate",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
 				package="collatz",
-				plugin="collatz::MAP",
+				plugin="collatz::Map",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			)
 		]

@@ -18,10 +18,21 @@ include_directories(include)
 
 add_executable(test_iu src/test_iu.cpp)
 ament_target_dependencies(test_iu rclcpp std_msgs)
+install(TARGETS test_iu DESTINATION lib/${PROJECT_NAME})
 
 add_executable(test_kiku src/test_kiku.cpp)
 ament_target_dependencies(test_kiku rclcpp std_msgs)
+install(TARGETS test_kiku DESTINATION lib/${PROJECT_NAME})
 
+add_library(map SHARED src/map.cpp)
+ament_target_dependencies(map rclcpp rclcpp_components std_msgs)
+rclcpp_components_register_nodes(map "collatz::MAP")
+install(TARGETS map DESTINATION lib)
+
+add_library(calculate SHARED src/calculat.cpp)
+ament_target_dependencies(calculate rclcpp rclcpp_components std_msgs)
+rclcpp_components_register_nodes(calculate "collatz::Calculate")
+# install(TARGETS calculate DESTINATION lib)
 
 add_library(iu SHARED src/iu.cpp)
 target_compile_definitions(iu PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -33,14 +44,6 @@ target_compile_definitions(kiku PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(kiku rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(kiku "collatz::KIKU")
 
-install(TARGETS test_iu test_kiku DESTINATION lib/${PROJECT_NAME})
-install(TARGETS
-	iu kiku
-	#  EXPORT export_minimal_comp_node
-	ARCHIVE DESTINATION lib
-	LIBRARY DESTINATION lib
-	RUNTIME DESTINATION bin
-)
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 

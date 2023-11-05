@@ -1,16 +1,15 @@
 /*
  * 2023.11.3
  * test_kiku.cpp
- * ver.1.0
+ * ver.1.1
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
 #include <cstdio>
 #include <memory>
-#include <string>
+
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/string.hpp>
 #include "collatz/collatz.hpp"
 
 

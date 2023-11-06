@@ -19,21 +19,22 @@ class Calculate : public rclcpp::Node
 public:
 	explicit Calculate(const rclcpp::NodeOptions &opt) : Node("CALCULATE", opt)
 	{
-		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter", qos, callback(msg_));
-	} 
+		rclcpp::QoS q(rclcpp::KeepLast(10));
+		// sub_ = create_subscription<std_msgs::msg::String>("chatter", q, call_back(msg_));
+		sub_ = create_subscription<std_msgs::msg::String>("chatter", q, std::bind(&call_back, this, std::placeholders::_1));
+	}
 
-	void callback(const std_msgs::msg::String::UniquePtr msg);
+	void call_back(const std_msgs::msg::String::SharedPtr msg);
 
 private:
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
-	std_msgs::msg::String::UniquePtr msg_;
+	std_msgs::msg::String::SharedPtr msg_;
 };
 
-void Calculate::callback(const std_msgs::msg::String::UniquePtr msg)
+void Calculate::call_back(const std_msgs::msg::String::SharedPtr msg)
 {
 	RCLCPP_INFO(this->get_logger(), "Next %s +1", msg->data.c_str());
-};
+}
 
 } /* namespace collatz */
 

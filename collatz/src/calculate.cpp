@@ -20,7 +20,7 @@ public:
 	explicit Calculate(const rclcpp::NodeOptions &opt) : Node("CALCULATE", opt)
 	{
 		rclcpp::QoS q(rclcpp::KeepLast(10));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter", q, &call_back(msg_));
+		sub_ = create_subscription<std_msgs::msg::String>("chatter", q, &call_back(s_msg_));
 		//sub_ = create_subscription<std_msgs::msg::String>("chatter", q, std::bind(&call_back, this, std::placeholders::_1));
 	}
 	//~Calculate(){}

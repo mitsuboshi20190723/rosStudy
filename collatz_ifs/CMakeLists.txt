@@ -14,7 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
-set(MSG_FILES "msg/test.msg")
+set(MSG_FILES "msg/Collatztest.msg")
 
 rosidl_generate_interfaces(${PROJECT_NAME} ${MSG_FILES} DEPENDENCIES std_msgs)
 

@@ -1,5 +1,5 @@
 /*
- * 2023.11.5
+ * 2023.11.6
  * calculate.cpp
  * ver.0.1
  * Kunihito Mitsuboshi
@@ -20,21 +20,27 @@ public:
 	explicit Calculate(const rclcpp::NodeOptions &opt) : Node("CALCULATE", opt)
 	{
 		rclcpp::QoS q(rclcpp::KeepLast(10));
-		// sub_ = create_subscription<std_msgs::msg::String>("chatter", q, call_back(msg_));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter", q, std::bind(&call_back, this, std::placeholders::_1));
+		sub_ = create_subscription<std_msgs::msg::String>("chatter", q, &call_back(msg_));
+		//sub_ = create_subscription<std_msgs::msg::String>("chatter", q, std::bind(&call_back, this, std::placeholders::_1));
 	}
-
-	void call_back(const std_msgs::msg::String::SharedPtr msg);
+	//~Calculate(){}
 
 private:
+	void call_back(const std_msgs::msg::String::SharedPtr msg)
+	{
+		RCLCPP_INFO(this->get_logger(), "Next %s +1", msg->data.c_str());
+	}
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
-	std_msgs::msg::String::SharedPtr msg_;
+	std_msgs::msg::String::SharedPtr s_msg_;
+	std_msgs::msg::String::UniquePtr u_msg_;
 };
 
+/*
 void Calculate::call_back(const std_msgs::msg::String::SharedPtr msg)
 {
 	RCLCPP_INFO(this->get_logger(), "Next %s +1", msg->data.c_str());
 }
+*/
 
 } /* namespace collatz */
 

@@ -1,13 +1,12 @@
 /*
- * 2020.9.22
+ * 2023.11.8
  * kiku.cpp
  * ver 0.1
  * Kunihito Mitsuboshi
  * license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-//#include <cstdio>
-//#include <memory>
+
 #include <string>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
@@ -15,12 +14,10 @@
 namespace jsrc
 {
 
-class KIKU : public rclcpp::Node
+class ShowJoyStatus : public rclcpp::Node
 {
 public:
-	__attribute__ ((visibility("default")))
-//	COMPOSITION_PUBLIC
-	explicit KIKU(const rclcpp::NodeOptions & opt) : Node("kiku", opt)
+	explicit ShowJoyStatus(const rclcpp::NodeOptions &opt) : Node("SJS", opt)
 	{
 		auto callback = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
@@ -39,4 +36,4 @@ private:
 
 #include "rclcpp_components/register_node_macro.hpp"
 
-RCLCPP_COMPONENTS_REGISTER_NODE(jsrc::KIKU)
+RCLCPP_COMPONENTS_REGISTER_NODE(jsrc::ShowJoyStatus)

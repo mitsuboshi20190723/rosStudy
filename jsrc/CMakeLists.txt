@@ -26,22 +26,22 @@ target_compile_definitions(kiku PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(kiku rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(kiku "jsrc::KIKU")
 
-add_library(ptrl SHARED src/ptrl.cpp)
-target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(ptrl "jsrc::ptrl")
+#add_library(ptrl SHARED src/ptrl.cpp)
+#target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
+#ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
+#rclcpp_components_register_nodes(ptrl "jsrc::ptrl")
 
-add_executable(kservo src/kservo.cpp)
-target_link_libraries(kservo ics3)
+#add_executable(kservo src/kservo.cpp)
+#target_link_libraries(kservo ics3)
 
-add_library(pantilt SHARED src/pantilt.cpp)
-target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
-target_link_libraries(pantilt ics3)
-rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
+#add_library(pantilt SHARED src/pantilt.cpp)
+#target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
+#ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
+#target_link_libraries(pantilt ics3)
+#rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
 
 install(TARGETS
-	kiku ptrl pantilt
+	kiku # ptrl pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

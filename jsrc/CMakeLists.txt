@@ -21,10 +21,10 @@ target_compile_definitions(iu PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(iu rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(iu "jsrc::IU")
 
-add_library(kiku SHARED src/kiku.cpp)
-target_compile_definitions(kiku PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(kiku rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(kiku "jsrc::KIKU")
+add_library(show_joy_status SHARED src/show_joy_status.cpp)
+target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(show_joy_statu rclcpp rclcpp_components std_msgs)
+rclcpp_components_register_nodes(show_joy_statu "jsrc::ShowJoyStatus")
 
 #add_library(ptrl SHARED src/ptrl.cpp)
 #target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -41,7 +41,7 @@ rclcpp_components_register_nodes(kiku "jsrc::KIKU")
 #rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
 
 install(TARGETS
-	kiku # ptrl pantilt
+	show_joy_status # ptrl pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

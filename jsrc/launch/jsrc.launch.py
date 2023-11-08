@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.8
+ #  2023.11.9
  #  jsrc.launch.py
  #  ver.0.3
  #  Kunihito Mitsuboshi
@@ -27,7 +27,7 @@ def generate_launch_description():
 		composable_node_descriptions=[
 			ComposableNode( # ros2 topic echo /joy
 				package="jsrc",
-				plugin="jsrc::KIKU",
+				plugin="jsrc::SJS",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(

@@ -13,6 +13,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+
 
 #include_directories(include)
 
@@ -23,8 +25,8 @@ rclcpp_components_register_nodes(iu "jsrc::IU")
 
 add_library(show_joy_status SHARED src/show_joy_status.cpp)
 target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(show_joy_statu rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(show_joy_statu "jsrc::ShowJoyStatus")
+ament_target_dependencies(show_joy_status rclcpp rclcpp_components std_msgs sensor_msgs)
+rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 
 #add_library(ptrl SHARED src/ptrl.cpp)
 #target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -40,8 +42,9 @@ rclcpp_components_register_nodes(show_joy_statu "jsrc::ShowJoyStatus")
 #target_link_libraries(pantilt ics3)
 #rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
 
+
 install(TARGETS
-	show_joy_status # ptrl pantilt
+	show_joy_status
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

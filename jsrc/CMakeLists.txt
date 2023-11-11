@@ -29,8 +29,8 @@ rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 #ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
 #rclcpp_components_register_nodes(ptrl "jsrc::ptrl")
 
-#add_executable(kservo src/kservo.cpp)
-#target_link_libraries(kservo ics3)
+add_executable(kservo src/kservo.cpp)
+target_link_libraries(kservo ics3)
 
 #add_library(pantilt SHARED src/pantilt.cpp)
 #target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")

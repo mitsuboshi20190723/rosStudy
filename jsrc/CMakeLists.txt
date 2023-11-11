@@ -18,10 +18,6 @@ find_package(sensor_msgs REQUIRED)
 
 #include_directories(include)
 
-add_library(iu SHARED src/iu.cpp)
-target_compile_definitions(iu PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(iu rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(iu "jsrc::IU")
 
 add_library(show_joy_status SHARED src/show_joy_status.cpp)
 target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")

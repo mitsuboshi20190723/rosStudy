@@ -1,13 +1,12 @@
 /*
- *  2020.10.4
+ *  2023.11.11
  *  ptrl.cpp
- *  ver 0.1
+ *  ver.0.1
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
 
-#include <cstdio>
 #include <string>
 #include <chrono>
 #include <rclcpp/rclcpp.hpp>
@@ -16,18 +15,16 @@
 namespace jsrc
 {
 
-class ptrl : public rclcpp::Node
+class PanTiltRightLeft : public rclcpp::Node
 {
 public :
-
-	explicit ptrl(const rclcpp::NodeOptions & opt) : Node("ptrl", opt)
+	explicit ptrl(const rclcpp::NodeOptions &opt) : Node("PTRL", opt)
 	{
 		auto cb_string_input = [this]() -> void
 		{
 			auto msg = std::make_unique<std_msgs::msg::String>();
 
 			msg->data = "pr";
-//			std::scanf("pt rl %s", msg->data);
 
 			pub_->publish(std::move(msg));
 		};
@@ -46,4 +43,4 @@ private :
 
 
 #include "rclcpp_components/register_node_macro.hpp"
-RCLCPP_COMPONENTS_REGISTER_NODE(jsrc::ptrl)
+RCLCPP_COMPONENTS_REGISTER_NODE(jsrc::PanTiltRightLeft)

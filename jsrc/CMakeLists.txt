@@ -36,7 +36,7 @@ target_link_libraries(kservo ics3)
 add_library(pantilt SHARED src/pantilt.cpp)
 target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
-target_link_libraries(pantilt ics3)
+# target_link_libraries(pantilt ics3)
 rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
 
 

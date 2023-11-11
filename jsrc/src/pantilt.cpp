@@ -1,7 +1,7 @@
 /*
  *  2023.11.11
  *  pantilt.cpp
- *  ver.0.1
+ *  ver.0.3
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -25,14 +25,12 @@ public :
 
 		auto cb_rot_servo = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
-//			ics::ICS3 s {"/dev/ttyUSB0", ics::Baudrate::RATE115200()};
-//			auto d=50;
-//			auto id=1;
+			ics::ICS3 s {"/dev/ttyUSB0", ics::Baudrate::RATE115200()};
+			auto d=50;
+			auto id=1;
+			s.move(id, ics::Angle::newDegree(d));			
 
 			RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
-
-//			s.move(id, ics::Angle::newDegree(d));
-
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));

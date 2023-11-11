@@ -2,26 +2,29 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.9
+ #  2023.11.11
  #  jsrc.launch.py
- #  ver.0.3
+ #  ver.0.4
  #  Kunihito Mitsuboshi
  #  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  ##
 
 
+from xml.dom.minicompat import NodeList
 from launch import LaunchDescription
 from launch_ros.actions import ComposableNodeContainer, LoadComposableNodes, Node
 from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
+
 	container = ComposableNodeContainer(
 		name="_container",
 		namespace="",
 		package="rclcpp_components",
 		executable="component_container_mt"
 	)
+
 	components = LoadComposableNodes(
 		target_container=container,
 		composable_node_descriptions=[
@@ -37,8 +40,10 @@ def generate_launch_description():
 			)
 		]
 	)
-	image1 = Node(package="image_tools", executable="cam2image")
-	image2 = Node(package="image_tools", executable="showimage")
 
+	nodes=[
+		Node(package="image_tools", executable="cam2image"),
+		Node(package="image_tools", executable="showimage")
+	]
 
-	return LaunchDescription([container, components, image1, image2])
+	return LaunchDescription([container, components, *nodes])

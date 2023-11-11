@@ -1,18 +1,16 @@
 /*
  *  2023.11.11
  *  kservo.cpp
- *  ver.0.5
+ *  ver.0.6
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
 
 
 #include <iostream>
-
-#include <iomanip>
-
-#include <stdexcept>
-#include <fstream>
+//#include <iomanip>
+//#include <stdexcept>
+//#include <fstream>
 #include <chrono>
 #include <thread>
 #include <ics3/ics>
@@ -20,12 +18,13 @@
 
 #define SERVO_DEV "/dev/ttyUSB0"
 
+
 int main(int argc, char *argv[])
 {
-	auto servo_id(0), servo_d(0), servo_a(0);
+	auto servo_id(0), servo_d(0);
 
+	for(int i=0; i < argc; i++) std::cout << argv[i] << std::endl;
 
-//	fcntl(joy_fd, F_SETFL, O_NONBLOCK);   // using non-blocking mode
 
 //	if servo open error
 	ics::ICS3 servo {SERVO_DEV, ics::Baudrate::RATE115200()};
@@ -60,7 +59,7 @@ int main(int argc, char *argv[])
 		auto ans = servo.move(servo_id, ics::Angle::newDegree(servo_d));
 		std::cout << "POS = " << ans.getRaw() << std::endl;
 
-		usleep(500);
+		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	}
 
 

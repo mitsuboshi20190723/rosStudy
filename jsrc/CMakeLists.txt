@@ -31,16 +31,17 @@ rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 
 add_executable(kservo src/kservo.cpp)
 target_link_libraries(kservo ics3)
+# ~/workspace/ros2/build/jsrc/kservo
 
-#add_library(pantilt SHARED src/pantilt.cpp)
-#target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
-#ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
-#target_link_libraries(pantilt ics3)
-#rclcpp_components_register_nodes(pantilt "jsrc::pantilt")
+add_library(pantilt SHARED src/pantilt.cpp)
+target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
+target_link_libraries(pantilt ics3)
+rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
 
 
 install(TARGETS
-	show_joy_status
+	show_joy_status pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

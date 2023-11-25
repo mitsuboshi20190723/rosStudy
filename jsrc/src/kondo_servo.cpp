@@ -1,5 +1,5 @@
 /*
- *  2023.11.11
+ *  2023.11.26
  *  kondo_servo.cpp
  *  ver.0.6
  *  Kunihito Mitsuboshi
@@ -8,9 +8,6 @@
 
 
 #include <iostream>
-//#include <iomanip>
-//#include <stdexcept>
-//#include <fstream>
 #include <chrono>
 #include <thread>
 #include <ics3/ics>
@@ -21,6 +18,7 @@
 
 int main(int argc, char *argv[])
 {
+	char in[50];
 	auto servo_id(0), servo_d(0);
 
 	for(int i=0; i < argc; i++) std::cout << argv[i] << std::endl;
@@ -49,22 +47,23 @@ int main(int argc, char *argv[])
 */
 	while(true)
 	{
-		servo_d = 500;
+		std::cout << "input DEGREE (-130 to 130) > "; std::cin >> in;
+		if((in[0] >= 'a' && in[0] <= 'z') || (in[0] >= 'A' && in[0] <= 'Z')) return 0;
 
-//		std::cout << "input DEGREE : "; std::cin >> servo_d;
-//		servo.move(servo_id, ics::Angle::newDegree(servo_d));
+		servo_d = std::atof(in);
+		if(servo_d >= -130 && servo_d <= 130)
+		{
+			servo.move(servo_id, ics::Angle::newDegree(servo_d));
 
-//		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 
-		auto ans = servo.move(servo_id, ics::Angle::newDegree(servo_d));
-		std::cout << "POS = " << ans.getRaw() << std::endl;
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+			auto ans = servo.move(servo_id, ics::Angle::newDegree(servo_d));
+			std::cout << "POS = " << ans.getRaw() << std::endl;
+		}
 	}
 
 
 //	servo close
-
 
 	return(0); // return 0;
 }

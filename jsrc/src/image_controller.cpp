@@ -1,5 +1,5 @@
 /*
- *  2023.11.12
+ *  2023.11.25
  *  image_controller.cpp
  *  ver.1.0
  *  Kunihito Mitsuboshi
@@ -15,7 +15,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 #include <rclcpp/rclcpp.hpp>
-#include <sensor_msgs/msg/image.hpp>
+//#include <sensor_msgs/msg/image.hpp>
+#include <geometry_msgs/msg/point.hpp>
 #include "rclcpp_components/register_node_macro.hpp"
 
 
@@ -24,7 +25,8 @@
 #define JSRC_FPS 30
 
 #define PATH4CAP "/dev/video0"
-#define PATH4CASCADE "/usr/local/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml"
+#define PATH4CASCADE "/usr/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml"
+//                   "/usr/local/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml"
 #define DEFAULT_TOPIC "chatter0"
 
 namespace jsrc
@@ -39,7 +41,7 @@ private :
 	rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr pub_;
 	rclcpp::TimerBase::SharedPtr timer_;
 
-	geometry_msgs::msg::point imag2point(); /* call back */
+	geometry_msgs::msg::Point imag2point(); /* call back */
 
 public :
 	explicit ImageController(const rclcpp::NodeOptions &opt);
@@ -49,7 +51,7 @@ public :
 
 geometry_msgs::msg::Point ImageController::imag2point()
 {
-	int biggest(0);
+	int i, biggest(0);
 	double s;
 	geometry_msgs::msg::Point p;
 //	cv::Rect face;
@@ -59,14 +61,14 @@ geometry_msgs::msg::Point ImageController::imag2point()
 
 	cascade_.detectMultiScale(img_, faces, 1.1, 3, 0, cv::Size(50, 50));
 
-	if(faces.len = 0)
+	if(faces.size() == 0)
 	{
-		p = (-1,-1,-1);
+		p.x = p.y = p.z = -1;
 	}
 	else
 	{
 		p.z = faces[0].width * faces[0].height;
-		for(int i=0; i<faces.size(); i++)
+		for(i=0; i<faces.size(); i++)
 		{
 			RCLCPP_INFO(this->get_logger(), "Find face %d", i);
 
@@ -82,9 +84,9 @@ geometry_msgs::msg::Point ImageController::imag2point()
 }
 
 
-ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCLT", opt); // int main(int argc, char **argv)
+ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCTL", opt) // int main(int argc, char **argv)
 {
-	auto path4cap = this->declare_parameter<std::string>("camera_path", PATH4CAP)
+	auto path4cap = this->declare_parameter<std::string>("camera_path", PATH4CAP);
 
 	cap_.open(path4cap);
 	if(!cap_.isOpened())
@@ -98,13 +100,13 @@ ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCLT"
 	cap_.set(cv::CAP_PROP_FPS, JSRC_FPS);
 //	cap_.set(cv::CAP_PROP_FORMAT, 16);
 
-	auto path4cascade = this->declare_parameter<std::string>("cascade_path", PATH4CASCADE)
-	cascade.load(path4cascade);
+	auto path4cascade = this->declare_parameter<std::string>("cascade_path", PATH4CASCADE);
+	cascade_.load(path4cascade);
 
 	rclcpp::QoS qos(rclcpp::KeepLast(10));
 	pub_ = create_publisher<geometry_msgs::msg::Point>(DEFAULT_TOPIC, qos);
 
-	auto cb = std::bind(&ImageController::imag2point(const cv::Mat), this);
+	auto cb = std::bind(&ImageController::imag2point(), this);
 	timer_ = create_wall_timer(std::chrono::milliseconds(1000 / 30), cb);
 }
 

@@ -1,5 +1,5 @@
 /*
- *  2023.11.11
+ *  2023.11.25
  *  pantilt.cpp
  *  ver.0.3
  *  Kunihito Mitsuboshi
@@ -13,6 +13,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+#define DEFAULT_TOPIC "chatter0"
 
 namespace jsrc
 {
@@ -34,7 +35,7 @@ public :
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		sub_ = create_subscription<std_msgs::msg::String>("chatter0", qos, cb_rot_servo);
+		sub_ = create_subscription<std_msgs::msg::String>(DEFAULT_TOPIC, qos, cb_rot_servo);
 	}
 
 private :

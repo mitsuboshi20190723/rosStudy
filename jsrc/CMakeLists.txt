@@ -14,6 +14,8 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(OpenCV REQUIRED) # COMPONENTS core highgui
 
 
 #include_directories(include)
@@ -24,14 +26,15 @@ target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(show_joy_status rclcpp rclcpp_components std_msgs sensor_msgs)
 rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 
-#add_library(ptrl SHARED src/ptrl.cpp)
-#target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
-#ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
-#rclcpp_components_register_nodes(ptrl "jsrc::ptrl")
+add_library(image_controller SHARED src/image_controller.cpp)
+target_compile_definitions(image_controller PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(image_controller rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
+rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
 
-add_executable(kservo src/kservo.cpp)
-target_link_libraries(kservo ics3)
-# ~/workspace/ros2/build/jsrc/kservo
+add_library(ptrl SHARED src/ptrl.cpp)
+target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
+rclcpp_components_register_nodes(ptrl "jsrc::ptrl")
 
 add_library(pantilt SHARED src/pantilt.cpp)
 target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -41,12 +44,20 @@ rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
 
 
 install(TARGETS
-	show_joy_status pantilt
+	show_joy_status image_controller ptrl pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib
 	RUNTIME DESTINATION bin
 )
+
+add_executable(kondo_servo src/kondo_servo.cpp)
+target_link_libraries(kondo_servo ics3)
+# ~/workspace/ros2/build/jsrc/kondo_servo
+
+add_executable(intel_realsense src/intel_realsense.cpp)
+target_link_libraries(intel_realsense OpenCV)
+# ~/workspace/ros2/build/jsrc/intel_realsense
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 

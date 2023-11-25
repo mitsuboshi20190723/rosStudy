@@ -1,5 +1,5 @@
 /*
- *  2023.11.11
+ *  2023.11.25
  *  ptrl.cpp
  *  ver.0.1
  *  Kunihito Mitsuboshi
@@ -12,13 +12,15 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+#define DEFAULT_TOPIC "chatter0"
+
 namespace jsrc
 {
 
 class PanTiltRightLeft : public rclcpp::Node
 {
 public :
-	explicit ptrl(const rclcpp::NodeOptions &opt) : Node("PTRL", opt)
+	explicit PanTiltRightLeft(const rclcpp::NodeOptions &opt) : Node("PTRL", opt)
 	{
 		auto cb_string_input = [this]() -> void
 		{
@@ -30,7 +32,7 @@ public :
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
-		pub_ = create_publisher<std_msgs::msg::String>("chatter0", qos);
+		pub_ = create_publisher<std_msgs::msg::String>(DEFAULT_TOPIC, qos);
 		timer_ = create_wall_timer(std::chrono::milliseconds(2000), cb_string_input);
 	}
 

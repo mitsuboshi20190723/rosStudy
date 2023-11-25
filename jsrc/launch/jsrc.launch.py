@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.11
+ #  2023.11.25
  #  jsrc.launch.py
- #  ver.0.4
+ #  ver.0.5
  #  Kunihito Mitsuboshi
  #  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  ##
@@ -35,8 +35,26 @@ def generate_launch_description():
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
+				package="jsrc",
+				plugin="jsrc::IMGCTL",
+#				name="joymsgs",
+				extra_arguments=[{"use_intra_process_comms": True}]
+			),
+			ComposableNode(
 				package="joy",
 				plugin="joy::Joy",
+#				name="joymsgs",
+				extra_arguments=[{"use_intra_process_comms": True}]
+			),
+			ComposableNode(
+				package="jsrc",
+				plugin="jsrc::PTRL",
+#				name="joymsgs",
+				extra_arguments=[{"use_intra_process_comms": True}]
+			),
+			ComposableNode(
+				package="jsrc",
+				plugin="jsrc::PANTILT",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			)
@@ -44,8 +62,8 @@ def generate_launch_description():
 	)
 
 	nodes=[
-		Node(package="image_tools", executable="cam2image"),
-		Node(package="image_tools", executable="showimage")
+#		Node(package="image_tools", executable="cam2image"),
+#		Node(package="image_tools", executable="showimage")
 	]
 
 	return LaunchDescription([container, components, *nodes])

@@ -1,7 +1,7 @@
 /*
- *  2023.11.25
+ *  2023.11.26
  *  pantilt.cpp
- *  ver.0.3
+ *  ver.0.4
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -13,25 +13,33 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
+#define SERVO_DEV "/dev/ttyUSB0"
 #define DEFAULT_TOPIC "chatter0"
 
 namespace jsrc
 {
+
+ics::ICS3 s_{SERVO_DEV, ics::Baudrate::RATE115200()};
+//ics::ID id_ = s_.getID();
 
 class PanTilt : public rclcpp::Node
 {
 public :
 	explicit PanTilt(const rclcpp::NodeOptions &opt) : Node("PANTILT", opt)
 	{
+//		ics::ICS3 s_{SERVO_DEV, ics::Baudrate::RATE115200()};
 
 		auto cb_rot_servo = [this](const std_msgs::msg::String::UniquePtr msg) -> void
 		{
-			ics::ICS3 s {"/dev/ttyUSB0", ics::Baudrate::RATE115200()};
-			auto d=50;
-			auto id=1;
-			s.move(id, ics::Angle::newDegree(d));			
+			if(1) RCLCPP_WARN(this->get_logger(), "No servo found!");
+			else
+			{
+//				id_ = s_.getID();
+				deg_ = 0;
+				s_.move(3, ics::Angle::newDegree(deg_));
 
-			RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+				RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+			}
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
@@ -40,6 +48,8 @@ public :
 
 private :
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
+//	ics::ID id_;
+	float deg_;
 };
 
 } /* namespace jsrc */

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.25
+ #  2023.11.26
  #  jsrc.launch.py
  #  ver.0.5
  #  Kunihito Mitsuboshi
@@ -30,13 +30,13 @@ def generate_launch_description():
 		composable_node_descriptions=[
 			ComposableNode( # ros2 topic echo /joy
 				package="jsrc",
-				plugin="jsrc::SJS",
+				plugin="jsrc::ShowJoyStatus",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
 				package="jsrc",
-				plugin="jsrc::IMGCTL",
+				plugin="jsrc::ImageController",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
@@ -48,13 +48,13 @@ def generate_launch_description():
 			),
 			ComposableNode(
 				package="jsrc",
-				plugin="jsrc::PTRL",
+				plugin="jsrc::PanTiltRightLeft",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			),
 			ComposableNode(
 				package="jsrc",
-				plugin="jsrc::PANTILT",
+				plugin="jsrc::PanTilt",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
 			)

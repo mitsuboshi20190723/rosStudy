@@ -26,10 +26,10 @@ target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(show_joy_status rclcpp rclcpp_components std_msgs sensor_msgs)
 rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 
-#add_library(image_controller SHARED src/image_controller.cpp)
-#target_compile_definitions(image_controller PRIVATE "COMPOSITION_BUILDING_DLL")
-#ament_target_dependencies(image_controller rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
-#rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
+add_library(image_controller SHARED src/image_controller.cpp)
+target_compile_definitions(image_controller PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(image_controller rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
+rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
 
 add_library(ptrl SHARED src/ptrl.cpp)
 target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -44,7 +44,7 @@ rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
 
 
 install(TARGETS
-	show_joy_status ptrl pantilt # image_controller ptrl pantilt
+	show_joy_status image_controller ptrl pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

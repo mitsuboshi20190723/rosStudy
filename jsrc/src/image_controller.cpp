@@ -70,14 +70,16 @@ geometry_msgs::msg::Point ImageController::imag2point()
 		p.z = faces[0].width * faces[0].height;
 		for(i=0; i<faces.size(); i++)
 		{
-			RCLCPP_INFO(this->get_logger(), "Find face %ld", i);
+			RCLCPP_INFO(this->get_logger(), "Find face %lu", i);
 
 			s = faces[i].width * faces[i].height;
 			if(p.z < s){biggest = i; p.z = s;}
 		}
 
-		p.x = (faces[biggest].x + faces[i].width/2) / JSRC_FRAME_WIDTH;
-		p.y = (faces[biggest].y + faces[i].height/2) / JSRC_FRAME_HEIGHT;
+		p.x = (faces[biggest].x + faces[i].width/2);
+		p.y = (faces[biggest].y + faces[i].height/2);
+
+		RCLCPP_INFO(this->get_logger(), "Face locate ( %lf, %lf )", p.x, p.y);
 	}
 
 	return p;

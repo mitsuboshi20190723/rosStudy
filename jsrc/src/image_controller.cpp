@@ -1,5 +1,5 @@
 /*
- *  2023.11.25
+ *  2023.11.26
  *  image_controller.cpp
  *  ver.1.0
  *  Kunihito Mitsuboshi
@@ -51,7 +51,7 @@ public :
 
 geometry_msgs::msg::Point ImageController::imag2point()
 {
-	int i, biggest(0);
+	unsigned long i, biggest(0);
 	double s;
 	geometry_msgs::msg::Point p;
 //	cv::Rect face;
@@ -70,7 +70,7 @@ geometry_msgs::msg::Point ImageController::imag2point()
 		p.z = faces[0].width * faces[0].height;
 		for(i=0; i<faces.size(); i++)
 		{
-			RCLCPP_INFO(this->get_logger(), "Find face %d", i);
+			RCLCPP_INFO(this->get_logger(), "Find face %ld", i);
 
 			s = faces[i].width * faces[i].height;
 			if(p.z < s){biggest = i; p.z = s;}
@@ -106,7 +106,7 @@ ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCTL"
 	rclcpp::QoS qos(rclcpp::KeepLast(10));
 	pub_ = create_publisher<geometry_msgs::msg::Point>(DEFAULT_TOPIC, qos);
 
-	auto cb = std::bind(&ImageController::imag2point(), this);
+	auto cb = std::bind(&ImageController::imag2point, this);
 	timer_ = create_wall_timer(std::chrono::milliseconds(1000 / 30), cb);
 }
 

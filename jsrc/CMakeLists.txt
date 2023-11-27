@@ -36,20 +36,24 @@ target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(ptrl "jsrc::PanTiltRightLeft")
 
-add_library(pantilt SHARED src/pantilt.cpp)
-target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
-# target_link_libraries(pantilt ics3)
-rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
+#add_library(pantilt SHARED src/pantilt.cpp)
+#target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
+#ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
+## target_link_libraries(pantilt ics3)
+#rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
 
 
 install(TARGETS
-	show_joy_status image_controller ptrl pantilt
+	show_joy_status image_controller ptrl # pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib
 	RUNTIME DESTINATION bin
 )
+
+add_executable(ros_pantilt src/ros_pantilt.cpp)
+target_link_libraries(ros_pantilt rclcpp std_msgs ics3)
+install(TARGETS ros_pantilt DESTINATION lib/${PROJECT_NAME})
 
 add_executable(kondo_servo src/kondo_servo.cpp)
 target_link_libraries(kondo_servo ics3)

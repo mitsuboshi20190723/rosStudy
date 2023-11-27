@@ -27,10 +27,12 @@ install(TARGETS kiku.sa DESTINATION lib/${PROJECT_NAME})
 add_library(iu.so SHARED src/iu.so.cpp)
 ament_target_dependencies(iu.so rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(iu.so "comp::IU")
+install(TARGETS iu.so DESTINATION lib)
 
 add_library(kiku.so SHARED src/kiku.so.cpp)
 ament_target_dependencies(kiku.so rclcpp rclcpp_components std_msgs)
 rclcpp_components_register_nodes(kiku.so "comp::KIKU")
+install(TARGETS kiku.so DESTINATION lib)
 
 
 install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)

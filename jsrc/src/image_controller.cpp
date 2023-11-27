@@ -1,7 +1,7 @@
 /*
- *  2023.11.26
+ *  2023.11.27
  *  image_controller.cpp
- *  ver.1.0
+ *  ver.1.1
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -9,8 +9,8 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
-#include <thread>
+//#include <string>
+//#include <thread>
 #include <chrono>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -27,7 +27,7 @@
 #define PATH4CAP "/dev/video0"
 #define PATH4CASCADE "/usr/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml"
 //                   "/usr/local/share/opencv4/haarcascades/haarcascade_frontalface_alt.xml"
-#define DEFAULT_TOPIC "chatter0"
+#define DEFAULT_TOPIC "testchat"
 
 namespace jsrc
 {
@@ -41,7 +41,7 @@ private :
 	rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr pub_;
 	rclcpp::TimerBase::SharedPtr timer_;
 
-	geometry_msgs::msg::Point imag2point(); /* call back */
+	void imag2point(); /* call back */
 
 public :
 	explicit ImageController(const rclcpp::NodeOptions &opt);
@@ -49,12 +49,11 @@ public :
 };
 
 
-geometry_msgs::msg::Point ImageController::imag2point()
+void ImageController::imag2point()
 {
 	unsigned long i, biggest(0);
 	double s;
-	geometry_msgs::msg::Point p;
-//	cv::Rect face;
+	geometry_msgs::msg::Point p; // p = std::make_unique<geometry_msgs::msg::Point>();
 	std::vector<cv::Rect> faces;
 
 	cap_ >> img_;
@@ -63,26 +62,31 @@ geometry_msgs::msg::Point ImageController::imag2point()
 
 	if(faces.size() == 0)
 	{
-		p.x = p.y = p.z = -1;
+		p.x = p.y = p.z = -1.0;
 	}
 	else
 	{
-		p.z = faces[0].width * faces[0].height;
+		p.z = (double)faces[0].width * (double)faces[0].height;
 		for(i=0; i<faces.size(); i++)
 		{
 			RCLCPP_INFO(this->get_logger(), "Find face %lu", i);
 
-			s = faces[i].width * faces[i].height;
+			s = (double)faces[i].width * (double)faces[i].height;
 			if(p.z < s){biggest = i; p.z = s;}
 		}
 
-		p.x = (faces[biggest].x + faces[i].width/2);
-		p.y = (faces[biggest].y + faces[i].height/2);
+		p.x = ((double)faces[biggest].x + (double)faces[i].width/2);
+		p.y = ((double)faces[biggest].y + (double)faces[i].height/2);
 
 		RCLCPP_INFO(this->get_logger(), "Face locate ( %lf, %lf )", p.x, p.y);
+
+		p.x -= JSRC_FRAME_WIDTH/2; p.x /= JSRC_FRAME_WIDTH/2;
+		p.y -= JSRC_FRAME_HEIGHT/2; p.y /= JSRC_FRAME_HEIGHT/2;
+
+		RCLCPP_INFO(this->get_logger(), "Control amount ( %lf, %lf )", p.x, p.y);
 	}
 
-	return p;
+	pub_->publish(std::move(p));
 }
 
 
@@ -93,7 +97,7 @@ ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCTL"
 	cap_.open(path4cap);
 	if(!cap_.isOpened())
 	{
-		RCLCPP_ERROR(this->get_logger(), "Faild to open %s", path4cap.c_str());
+		RCLCPP_ERROR(this->get_logger(), "Cannot open %s.", path4cap.c_str());
 		exit(0);
 	}
 
@@ -113,7 +117,7 @@ ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCTL"
 }
 
 
-ImageController::~ImageController()
+ImageController::~ImageController() // return
 {
 	cap_.release();
 }

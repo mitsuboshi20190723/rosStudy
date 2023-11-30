@@ -52,7 +52,8 @@ install(TARGETS
 )
 
 add_executable(ros_pantilt src/ros_pantilt.cpp)
-target_link_libraries(ros_pantilt rclcpp std_msgs ics3)
+ament_target_dependencies(ros_pantilt rclcpp std_msgs)
+target_link_libraries(ros_pantilt ics3)
 install(TARGETS ros_pantilt DESTINATION lib/${PROJECT_NAME})
 
 add_executable(kondo_servo src/kondo_servo.cpp)

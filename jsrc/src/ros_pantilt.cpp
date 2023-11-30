@@ -1,7 +1,7 @@
 /*
- *  2023.11.27
+ *  2023.11.30
  *  ros_pantilt.cpp
- *  ver.0.4
+ *  ver.0.5
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -24,24 +24,25 @@ class PanTilt : public rclcpp::Node
 {
 private :
 	float deg_;
-	ics::ID id_;
+//	ics::ID id_;
+	ics::ICS3 s_{SERVO_DEV, ics::Baudrate::RATE115200()};
 	rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
 
 	void rot_servo(const std_msgs::msg::String::UniquePtr msg); /* call back */
 
 public :
-	explicit PanTilt(const rclcpp::NodeOptions &opt);
+	explicit PanTilt(const std::string &topic_name);
 	~PanTilt();
 };
 
 
-vuid PanTilt::rot_servo(const std_msgs::msg::String::UniquePtr msg)
+void PanTilt::rot_servo(const std_msgs::msg::String::UniquePtr msg)
 {
-	if(1) RCLCPP_WARN(this->get_logger(), "No servo found!");
+	if(0) RCLCPP_WARN(this->get_logger(), "No servo found!");
 	else
 	{
-		id_ = s_.getID();
-		deg_ = 0;
+//		id_ = s_.getID();
+		deg_ = 120;
 		s_.move(3, ics::Angle::newDegree(deg_));
 
 		RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
@@ -49,13 +50,14 @@ vuid PanTilt::rot_servo(const std_msgs::msg::String::UniquePtr msg)
 }
 
 
-PanTilt::PanTilt(const rclcpp::NodeOptions &opt) : Node("PANTILT", opt)
+PanTilt::PanTilt(const std::string &topic_name) : Node("PANTILT")
 {
-	ics::ICS3 s_{SERVO_DEV, ics::Baudrate::RATE115200()};
+//	using std::placeholders::_1;
+//	ics::ICS3 s_{SERVO_DEV, ics::Baudrate::RATE115200()};
 
 	rclcpp::QoS qos(rclcpp::KeepLast(10));
-	auto cb = std::bind(&PanTilt::rot_servo, this);
-	sub_ = create_subscription<std_msgs::msg::String>(DEFAULT_TOPIC, qos, cb);
+	auto cb = std::bind(&PanTilt::rot_servo, this, std::placeholders::_1);
+	sub_ = create_subscription<std_msgs::msg::String>(topic_name, qos, cb);
 }
 
 PanTilt::~PanTilt()
@@ -69,8 +71,9 @@ PanTilt::~PanTilt()
 int main(int argc, char **argv)
 {
 	rclcpp::init(argc, argv);
-	PanTilt node;
 
+	auto node = std::make_shared<PanTilt>(DEFAULT_TOPIC);
+	rclcpp::spin(node);
 	rclcpp::shutdown();
 	return 0;
 }

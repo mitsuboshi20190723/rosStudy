@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.11.26
+ #  2023.11.30
  #  jsrc.launch.py
  #  ver.0.5
  #  Kunihito Mitsuboshi
@@ -51,19 +51,20 @@ def generate_launch_description():
 				plugin="jsrc::PanTiltRightLeft",
 #				name="joymsgs",
 				extra_arguments=[{"use_intra_process_comms": True}]
-			),
-			ComposableNode(
-				package="jsrc",
-				plugin="jsrc::PanTilt",
+			)#,
+#			ComposableNode(
+#				package="jsrc",
+#				plugin="jsrc::PanTilt",
 #				name="joymsgs",
-				extra_arguments=[{"use_intra_process_comms": True}]
-			)
+#				extra_arguments=[{"use_intra_process_comms": True}]
+#			)
 		]
 	)
 
 	nodes=[
 #		Node(package="image_tools", executable="cam2image"),
-#		Node(package="image_tools", executable="showimage")
+#		Node(package="image_tools", executable="showimage")#,
+		Node(package="jsrc", executable="ros_pantilt")
 	]
 
 	return LaunchDescription([container, components, *nodes])

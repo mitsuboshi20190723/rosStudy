@@ -1,5 +1,5 @@
 /*
- *  2023.11.26
+ *  2023.12.2
  *  pantilt.cpp
  *  ver.0.4
  *  Kunihito Mitsuboshi
@@ -35,7 +35,8 @@ public :
 			else
 			{
 //				id_ = s_.getID();
-				deg_ = 0;
+				
+				deg_ = std::atof(msg->data.c_str());
 				s_.move(3, ics::Angle::newDegree(deg_));
 
 				RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());

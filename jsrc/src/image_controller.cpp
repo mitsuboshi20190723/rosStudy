@@ -113,7 +113,7 @@ ImageController::ImageController(const rclcpp::NodeOptions &opt) : Node("IMGCTL"
 	pub_ = create_publisher<geometry_msgs::msg::Point>(DEFAULT_TOPIC, qos);
 
 	auto cb = std::bind(&ImageController::imag2point, this);
-	timer_ = create_wall_timer(std::chrono::milliseconds(1000 / 30), cb);
+	timer_ = create_wall_timer(std::chrono::milliseconds(1000), cb);
 }
 
 

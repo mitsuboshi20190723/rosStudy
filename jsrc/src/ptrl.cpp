@@ -1,5 +1,5 @@
 /*
- *  2023.11.25
+ *  2023.12.2
  *  ptrl.cpp
  *  ver.0.1
  *  Kunihito Mitsuboshi
@@ -22,21 +22,32 @@ class PanTiltRightLeft : public rclcpp::Node
 public :
 	explicit PanTiltRightLeft(const rclcpp::NodeOptions &opt) : Node("PTRL", opt)
 	{
+		cp_ = 0;
 		auto cb_string_input = [this]() -> void
 		{
 			auto msg = std::make_unique<std_msgs::msg::String>();
 
-			msg->data = "pr";
+			if(cp_ == 0)
+			{
+				cp_ = 1;
+				msg->data = "90";
+			}
+			else
+			{
+				cp_ = 0;
+				msg->data = "-90";
+			}
 
 			pub_->publish(std::move(msg));
 		};
 
 		rclcpp::QoS qos(rclcpp::KeepLast(10));
 		pub_ = create_publisher<std_msgs::msg::String>(DEFAULT_TOPIC, qos);
-		timer_ = create_wall_timer(std::chrono::milliseconds(2000), cb_string_input);
+		timer_ = create_wall_timer(std::chrono::milliseconds(5000), cb_string_input);
 	}
 
 private :
+	int cp_;
 	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_;
 	rclcpp::TimerBase::SharedPtr timer_;
 };

@@ -31,10 +31,15 @@ target_compile_definitions(image_controller PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(image_controller rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
 rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
 
-add_library(ptrl SHARED src/ptrl.cpp)
-target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
-rclcpp_components_register_nodes(ptrl "jsrc::PanTiltRightLeft")
+add_library(servoctl SHARED src/servoctl.cpp)
+target_compile_definitions(servoctl PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(servoctl rclcpp rclcpp_components std_msgs geometry_msgs)
+rclcpp_components_register_nodes(servoctl "jsrc::Sctl")
+
+#add_library(ptrl SHARED src/ptrl.cpp)
+#target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
+#ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
+#rclcpp_components_register_nodes(ptrl "jsrc::PanTiltRightLeft")
 
 #add_library(pantilt SHARED src/pantilt.cpp)
 #target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
@@ -44,7 +49,7 @@ rclcpp_components_register_nodes(ptrl "jsrc::PanTiltRightLeft")
 
 
 install(TARGETS
-	show_joy_status image_controller ptrl # pantilt
+	show_joy_status image_controller servoctl # ptrl pantilt
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

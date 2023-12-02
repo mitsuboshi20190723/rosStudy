@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+
+
+cd ~/workspace/rosStudy
+
+colcon build --symlink-install --packages-select $1
+
+exit 0
+
+

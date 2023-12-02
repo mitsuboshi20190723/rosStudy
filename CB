@@ -1,12 +1,13 @@
 #!/bin/bash
 
 
-
-
 cd ~/workspace/rosStudy
 
 colcon build --symlink-install --packages-select $1
 
+source ~/workspace/rosStudy/install/setup.bash
+
 exit 0
 
-
+# colcon build --cmake-clean-cache
+# rm -rf build/ install/ log/

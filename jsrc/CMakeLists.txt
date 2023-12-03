@@ -33,7 +33,7 @@ rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
 
 add_library(servoctl SHARED src/servoctl.cpp)
 target_compile_definitions(servoctl PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(servoctl rclcpp rclcpp_components std_msgs geometry_msgs)
+ament_target_dependencies(servoctl rclcpp rclcpp_components std_msgs sensor_msgs geometry_msgs)
 rclcpp_components_register_nodes(servoctl "jsrc::Sctl")
 
 #add_library(ptrl SHARED src/ptrl.cpp)

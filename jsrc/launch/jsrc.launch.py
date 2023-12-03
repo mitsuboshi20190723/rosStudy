@@ -24,32 +24,12 @@ def generate_launch_description():
 	components = LoadComposableNodes(
 		target_container=container,
 		composable_node_descriptions=[
-			ComposableNode( # ros2 topic echo /joy
-				package="jsrc",
-				plugin="jsrc::ShowJoyStatus",
-#				name="joymsgs",
-				extra_arguments=eargs
-			),
-			ComposableNode(
-				package="jsrc",
-				plugin="jsrc::ImageController",
-#				name="joymsgs",
-				extra_arguments=eargs
-			),
-			ComposableNode(
-				package="joy",
-				plugin="joy::Joy",
-#				name="joymsgs",
-				extra_arguments=eargs
-			),
-			ComposableNode(
-				package="jsrc",
-				plugin="jsrc::Sctl",
-#				name="joymsgs",
-				extra_arguments=eargs
-			),
-#			ComposableNode(package="jsrc", plugin="jsrc::PanTiltRightLeft", extra_arguments=[{"use_intra_process_comms": True}]),
-#			ComposableNode(package="jsrc", plugin="jsrc::PanTilt", extra_arguments=[{"use_intra_process_comms": True}]),
+			ComposableNode(package="joy", plugin="joy::Joy", extra_arguments=eargs),
+#			ComposableNode(package="jsrc", plugin="jsrc::ShowJoyStatus", extra_arguments=eargs),
+			ComposableNode(package="jsrc", plugin="jsrc::ImageController", extra_arguments=eargs),
+			ComposableNode(package="jsrc", plugin="jsrc::Sctl", extra_arguments=eargs),
+#			ComposableNode(package="jsrc", plugin="jsrc::PanTiltRightLeft", extra_arguments=eargs),
+#			ComposableNode(package="jsrc", plugin="jsrc::PanTilt", extra_arguments=eargs),
 		]
 	)
 

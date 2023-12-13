@@ -1,7 +1,7 @@
 /*
- *  2023.12.2
+ *  2023.12.12
  *  ros_pantilt.cpp
- *  ver.0.6
+ *  ver.0.7
  *  Kunihito Mitsuboshi
  *  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -17,7 +17,7 @@
 ////////{
 
 #define SERVO_DEV "/dev/ttyUSB0"
-#define DEFAULT_TOPIC "chatter0"
+#define DEFAULT_TOPIC "testctl"
 
 
 class PanTilt : public rclcpp::Node

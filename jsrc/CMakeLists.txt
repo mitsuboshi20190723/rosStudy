@@ -26,30 +26,24 @@ target_compile_definitions(show_joy_status PRIVATE "COMPOSITION_BUILDING_DLL")
 ament_target_dependencies(show_joy_status rclcpp rclcpp_components std_msgs sensor_msgs)
 rclcpp_components_register_nodes(show_joy_status "jsrc::ShowJoyStatus")
 
-add_library(image_controller SHARED src/image_controller.cpp)
-target_compile_definitions(image_controller PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(image_controller rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
-rclcpp_components_register_nodes(image_controller "jsrc::ImageController")
+add_library(video SHARED src/video.cpp)
+target_compile_definitions(video PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(video rclcpp rclcpp_components std_msgs geometry_msgs OpenCV)
+rclcpp_components_register_nodes(video "jsrc::Video")
 
-add_library(servoctl SHARED src/servoctl.cpp)
-target_compile_definitions(servoctl PRIVATE "COMPOSITION_BUILDING_DLL")
-ament_target_dependencies(servoctl rclcpp rclcpp_components std_msgs sensor_msgs geometry_msgs)
-rclcpp_components_register_nodes(servoctl "jsrc::Sctl")
+add_library(servo_control SHARED src/servo_control.cpp)
+target_compile_definitions(servo_control PRIVATE "COMPOSITION_BUILDING_DLL")
+ament_target_dependencies(servo_control rclcpp rclcpp_components std_msgs sensor_msgs geometry_msgs)
+rclcpp_components_register_nodes(servo_control "jsrc::ServoControl")
 
 #add_library(ptrl SHARED src/ptrl.cpp)
 #target_compile_definitions(ptrl PRIVATE "COMPOSITION_BUILDING_DLL")
 #ament_target_dependencies(ptrl rclcpp rclcpp_components std_msgs)
 #rclcpp_components_register_nodes(ptrl "jsrc::PanTiltRightLeft")
 
-#add_library(pantilt SHARED src/pantilt.cpp)
-#target_compile_definitions(pantilt PRIVATE "COMPOSITION_BUILDING_DLL")
-#ament_target_dependencies(pantilt rclcpp rclcpp_components std_msgs)
-## target_link_libraries(pantilt ics3)
-#rclcpp_components_register_nodes(pantilt "jsrc::PanTilt")
-
 
 install(TARGETS
-	show_joy_status image_controller servoctl # ptrl pantilt
+	show_joy_status video servo_control # ptrl
 	#  EXPORT export_minimal_comp_node
 	ARCHIVE DESTINATION lib
 	LIBRARY DESTINATION lib

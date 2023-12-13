@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 ##
- #  2023.12.2
+ #  2023.12.14
  #  jsrc.launch.py
- #  ver.0.6
+ #  ver.0.7
  #  Kunihito Mitsuboshi
  #  license(Apache-2.0) at http://www.apache.org/licenses/LICENSE-2.0
  ##
@@ -26,10 +26,9 @@ def generate_launch_description():
 		composable_node_descriptions=[
 			ComposableNode(package="joy", plugin="joy::Joy", extra_arguments=eargs),
 #			ComposableNode(package="jsrc", plugin="jsrc::ShowJoyStatus", extra_arguments=eargs),
-			ComposableNode(package="jsrc", plugin="jsrc::ImageController", extra_arguments=eargs),
-			ComposableNode(package="jsrc", plugin="jsrc::Sctl", extra_arguments=eargs),
+			ComposableNode(package="jsrc", plugin="jsrc::Video", extra_arguments=eargs),
+			ComposableNode(package="jsrc", plugin="jsrc::ServoControl", extra_arguments=eargs),
 #			ComposableNode(package="jsrc", plugin="jsrc::PanTiltRightLeft", extra_arguments=eargs),
-#			ComposableNode(package="jsrc", plugin="jsrc::PanTilt", extra_arguments=eargs),
 		]
 	)
 
